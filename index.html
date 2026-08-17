@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shahawi Ltd - Personal Transport</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="brand-icon">🚐</span>
+                <div>
+                    <span class="brand-name">Shahawi Ltd</span>
+                    <span class="brand-tagline">Personal Transport</span>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="#services">Services</a>
+                <a href="#why-us">Why Us</a>
+                <a href="#contact" class="nav-cta">Contact</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">🚀 Growing Local Business</div>
+                    <h1>Personal Transport, <br><span class="highlight">With a Flexible Approach</span></h1>
+                    <p class="hero-description">
+                        We're a growing independent transport business with a small fleet of 
+                        <strong>one bus</strong> and <strong>one private-hire car</strong>. 
+                        That means we keep things personal, communicate directly with our 
+                        passengers, and ensure that each journey is as safe and comfortable 
+                        as possible.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="https://wa.me/1234567890" class="btn btn-primary">
+                            <span>💬</span> Message on WhatsApp
+                        </a>
+                        <a href="#contact" class="btn btn-secondary">Enquire Now</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">1</span>
+                            <span class="stat-label">Bus</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat">
+                            <span class="stat-number">1</span>
+                            <span class="stat-label">Private Car</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">Personal Service</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-card">
+                        <div class="card-icon">🚐</div>
+                        <h4>Quick Quote</h4>
+                        <p>Tell us your journey details</p>
+                        <div class="card-input-group">
+                            <input type="text" placeholder="Where to?" readonly>
+                            <input type="text" placeholder="When?" readonly>
+                            <input type="text" placeholder="How many people?" readonly>
+                        </div>
+                        <a href="https://wa.me/1234567890" class="btn btn-whatsapp small">Get Quote on WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="trust-bar">
+        <div class="container">
+            <div class="trust-items">
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span>
+                    <span>Pre-booked journeys</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span>
+                    <span>Direct communication</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span>
+                    <span>Flexible scheduling</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span>
+                    <span>Local operator</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span>
+                    <span>Regular customers welcome</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">What We Offer</span>
+                <h2>Our Services</h2>
+                <p>Personalised transport solutions for every journey</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">✈️</div>
+                    <h3>Airport Transfers</h3>
+                    <p>Stress-free travel to and from all major airports. Pre-book for guaranteed availability.</p>
+                    <span class="service-tag">Popular</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏫</div>
+                    <h3>School Transport</h3>
+                    <p>Regular, reliable school runs. Perfect for families with fixed daily schedules.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎉</div>
+                    <h3>Group Journeys</h3>
+                    <p>Day trips, events, weddings, and corporate transport. Our bus seats up to 16 passengers.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏥</div>
+                    <h3>Hospital Appointments</h3>
+                    <p>Comfortable, punctual transport to medical appointments. We wait and return you home.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💼</div>
+                    <h3>Business Travel</h3>
+                    <p>Professional transport for client meetings, conferences, and work events.</p>
+                </div>
+                <div class="service-card service-highlight">
+                    <div class="service-icon">⚡</div>
+                    <h3>Last-Minute Enquiry</h3>
+                    <p>Need a journey urgently? Contact us - we'll check availability for you.</p>
+                    <span class="service-tag">24/7</span>
+                </div>
+            </div>
+            <p class="service-note">⚠️ All services are subject to vehicle and driver availability.</p>
+        </div>
+    </section>
+
+    <!-- Why Us -->
+    <section id="why-us" class="why-us">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Why Choose Us</span>
+                <h2>Why Shahawi?</h2>
+                <p>What makes us different from the big transport companies</p>
+            </div>
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-number">01</div>
+                    <h3>👤 One-to-One Service</h3>
+                    <p>You speak directly to the person arranging your journey. No call centres, no automated messages.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-number">02</div>
+                    <h3>🕒 Flexible Scheduling</h3>
+                    <p>We adapt to your timetable, not the other way around. Early morning or late evening - we'll work with you.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-number">03</div>
+                    <h3>💬 Clear Communication</h3>
+                    <p>Confirmations, reminders, and updates via WhatsApp - simple, instant, and always personal.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-number">04</div>
+                    <h3>📍 Local Operator</h3>
+                    <p>We know the area, the traffic patterns, and the best routes. You're not just another booking to us.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-number">05</div>
+                    <h3>📅 Pre-Booked Journeys</h3>
+                    <p>Our model is based on pre-arranged transport, so we can plan around you and guarantee reliability.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-number">06</div>
+                    <h3>🤝 Regular Customers Welcome</h3>
+                    <p>Airport, school, and work commuters - we value repeat business and build lasting relationships.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Growing Section -->
+    <section class="growing">
+        <div class="container">
+            <div class="growing-content">
+                <div class="growing-icon">🌱</div>
+                <h2>Growing With You</h2>
+                <p>
+                    Shahawi Ltd is a new business actively building its fleet and customer base. 
+                    By choosing us, you're supporting a local independent operator that truly values 
+                    every single journey. As we grow, our service remains personal — that's our promise.
+                </p>
+                <div class="growing-timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-dot"></span>
+                        <span>Starting with 1 bus + 1 car</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-dot"></span>
+                        <span>Building customer relationships</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-dot"></span>
+                        <span>Expanding our fleet for you</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">What People Say</span>
+                <h2>Customer Feedback</h2>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Used Shahawi for my airport transfer. Driver was on time, friendly, and the car was spotless. Will definitely use again."</p>
+                    <div class="testimonial-author">
+                        <strong>Sarah M.</strong>
+                        <span>Airport Transfer</span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Great service for my son's school run. Reliable every single day. So much better than the big companies."</p>
+                    <div class="testimonial-author">
+                        <strong>David R.</strong>
+                        <span>School Transport</span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Booked the bus for a family day out. Clean, comfortable, and the driver was brilliant with the kids."</p>
+                    <div class="testimonial-author">
+                        <strong>Emma T.</strong>
+                        <span>Group Journey</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / CTA -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-box">
+                <div class="contact-content">
+                    <span class="section-tag" style="color: #a8d5ff;">Get in Touch</span>
+                    <h2>Need a Journey?</h2>
+                    <p class="contact-text">
+                        Message us on WhatsApp. Tell us where you're going, when you need to travel, 
+                        and how many people are travelling. We'll check availability and get back to you.
+                    </p>
+                    <div class="contact-buttons">
+                        <a href="https://wa.me/1234567890" class="btn btn-whatsapp large">
+                            <span>💬</span> WhatsApp Us Now
+                        </a>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-detail">
+                            <span class="detail-icon">📞</span>
+                            <div>
+                                <strong>Phone</strong>
+                                <span>+44 1234 567890</span>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <span class="detail-icon">✉️</span>
+                            <div>
+                                <strong>Email</strong>
+                                <span>info@shahawi.co.uk</span>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <span class="detail-icon">📍</span>
+                            <div>
+                                <strong>Service Area</strong>
+                                <span>Local & surrounding areas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-visual">
+                    <div class="contact-card">
+                        <div class="contact-card-icon">💬</div>
+                        <h3>Quick Response</h3>
+                        <p>We aim to reply within 30 minutes</p>
+                        <div class="contact-availability">
+                            <span class="availability-dot"></span>
+                            <span>Available now</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="brand-icon">🚐</span>
+                    <div>
+                        <span class="brand-name">Shahawi Ltd</span>
+                        <span class="brand-tagline">Small fleet. Personal service. Reliable journeys.</span>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <a href="#services">Services</a>
+                    <a href="#why-us">Why Us</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://wa.me/1234567890" class="social-link">💬 WhatsApp</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Shahawi Ltd. All rights reserved.</p>
+                <p class="footer-tagline">Small fleet. Personal service. Reliable journeys.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
