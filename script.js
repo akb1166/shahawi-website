@@ -1,11 +1,11 @@
 // ========================================
 // SHAHAWI LTD - Complete Website Script
+// Version: 2.0
 // ========================================
 
 // ===== CONFIGURATION =====
-// Update these with your actual business details
 const CONFIG = {
-    whatsappNumber: '447397547205',  // UK number without leading 0
+    whatsappNumber: '447397547205',
     phoneNumber: '07397 547205',
     email: 'Shahawi_ltd@outlook.com',
     companyName: 'Shahawi Ltd',
@@ -26,7 +26,6 @@ if (mobileBtn) {
     });
 }
 
-// Close mobile menu when a link is clicked
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', function() {
         if (navLinks.classList.contains('active')) {
@@ -45,21 +44,13 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', function(e) {
         const targetId = this.getAttribute('href');
-        
-        // Skip if it's just "#" or empty
         if (targetId === '#' || !targetId) return;
-        
         const targetElement = document.querySelector(targetId);
-        
         if (targetElement) {
             e.preventDefault();
-            
-            // Get header height for offset (sticky nav)
             const header = document.querySelector('.navbar');
             const headerHeight = header ? header.offsetHeight : 0;
-            
             const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
-            
             window.scrollTo({
                 top: targetPosition,
                 behavior: 'smooth'
@@ -71,22 +62,17 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 // ========================================
 // 3. WHATSAPP LINK UPDATER
 // ========================================
-// Update ALL WhatsApp links on the page
 document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
     link.href = `https://wa.me/${CONFIG.whatsappNumber}`;
-    
-    // Optional: Add tracking parameters for analytics
-    // link.href = `https://wa.me/${CONFIG.whatsappNumber}?text=Hello%20Shahawi%20Ltd%2C%20I%27d%20like%20to%20book%20a%20journey`;
 });
 
 // ========================================
-// 4. SCROLL ANIMATIONS (Intersection Observer)
+// 4. SCROLL ANIMATIONS
 // ========================================
 const animateElements = document.querySelectorAll(
     '.service-card, .why-card, .testimonial-card, .feature, .stat'
 );
 
-// Set initial state for elements to animate
 animateElements.forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(40px)';
@@ -101,13 +87,10 @@ const observerOptions = {
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-            // Add a small delay for staggered effect
             setTimeout(() => {
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
             }, index * 50);
-            
-            // Stop observing once animated
             observer.unobserve(entry.target);
         }
     });
@@ -127,12 +110,9 @@ const counterObserver = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             const el = entry.target;
             const target = parseInt(el.textContent);
-            
-            // Only animate if it's a number
             if (!isNaN(target) && target > 0) {
                 animateCounter(el, target);
             }
-            
             counterObserver.unobserve(el);
         }
     });
@@ -144,13 +124,10 @@ statNumbers.forEach(el => {
 
 function animateCounter(element, target) {
     let current = 0;
-    const increment = target / 40; // Smooth animation over ~40 frames
-    const duration = 1500; // 1.5 seconds
-    const stepTime = duration / 40;
-    
+    const increment = target / 40;
+    const stepTime = 1500 / 40;
     const timer = setInterval(() => {
         current += increment;
-        
         if (current >= target) {
             element.textContent = target;
             clearInterval(timer);
@@ -164,12 +141,9 @@ function animateCounter(element, target) {
 // 6. NAVBAR SCROLL EFFECT
 // ========================================
 const navbar = document.querySelector('.navbar');
-let lastScrollY = 0;
 
 window.addEventListener('scroll', function() {
     const currentScrollY = window.scrollY;
-    
-    // Add shadow when scrolled
     if (currentScrollY > 50) {
         navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
         navbar.style.borderBottomColor = 'rgba(0, 0, 0, 0.08)';
@@ -177,20 +151,11 @@ window.addEventListener('scroll', function() {
         navbar.style.boxShadow = 'none';
         navbar.style.borderBottomColor = 'rgba(0, 0, 0, 0.05)';
     }
-    
-    // Hide/show navbar on scroll (optional - uncomment to enable)
-    // if (currentScrollY > lastScrollY && currentScrollY > 200) {
-    //     navbar.style.transform = 'translateY(-100%)';
-    // } else {
-    //     navbar.style.transform = 'translateY(0)';
-    // }
-    // lastScrollY = currentScrollY;
 });
 
 // ========================================
-// 7. BACK TO TOP BUTTON (Optional)
+// 7. BACK TO TOP BUTTON
 // ========================================
-// Create back to top button if it doesn't exist
 let backToTopBtn = document.querySelector('.back-to-top');
 
 if (!backToTopBtn) {
@@ -198,25 +163,6 @@ if (!backToTopBtn) {
     backToTopBtn.className = 'back-to-top';
     backToTopBtn.innerHTML = '↑';
     backToTopBtn.setAttribute('aria-label', 'Back to top');
-    backToTopBtn.style.cssText = `
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 50px;
-        height: 50px;
-        background: #25D366;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        font-size: 24px;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-        transition: all 0.3s ease;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(20px);
-        z-index: 999;
-    `;
     document.body.appendChild(backToTopBtn);
 }
 
@@ -239,59 +185,196 @@ backToTopBtn.addEventListener('click', function() {
     });
 });
 
-// Hover effect for back to top button
 backToTopBtn.addEventListener('mouseenter', function() {
     this.style.transform = 'scale(1.1)';
-    this.style.boxShadow = '0 6px 25px rgba(37, 211, 102, 0.6)';
 });
 
 backToTopBtn.addEventListener('mouseleave', function() {
     this.style.transform = 'scale(1)';
-    this.style.boxShadow = '0 4px 15px rgba(37, 211, 102, 0.4)';
 });
 
 // ========================================
-// 8. CONTACT FORM VALIDATION (if you add a form later)
+// 8. QUOTE CALCULATOR
 // ========================================
-// This is a placeholder in case you add a contact form
-// You can uncomment and use this later
 
-/*
-document.querySelector('form')?.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const name = this.querySelector('input[name="name"]')?.value;
-    const email = this.querySelector('input[name="email"]')?.value;
-    const message = this.querySelector('textarea[name="message"]')?.value;
-    
-    if (!name || !email || !message) {
-        alert('Please fill in all fields.');
+// Pricing configuration (per mile)
+const PRICING = {
+    car: {
+        airport: 2.50,
+        school: 2.00,
+        group: 2.80,
+        hospital: 2.20,
+        business: 2.60,
+        custom: 2.40
+    },
+    bus: {
+        airport: 3.50,
+        school: 3.00,
+        group: 3.80,
+        hospital: 3.20,
+        business: 3.60,
+        custom: 3.40
+    },
+    minCharge: {
+        car: 15.00,
+        bus: 25.00
+    },
+    extraPassenger: {
+        car: 2.00,
+        bus: 1.50
+    }
+};
+
+const WAITING_CHARGE = 5.00;
+
+function calculateQuote() {
+    const tripType = document.getElementById('tripType').value;
+    const distanceInput = document.getElementById('distance');
+    const passengersInput = document.getElementById('passengers');
+    const vehicleType = document.getElementById('vehicleType').value;
+    const estimateAmount = document.getElementById('estimateAmount');
+    const resultBox = document.getElementById('quoteResult');
+
+    // Get values - allow empty
+    const distance = parseFloat(distanceInput.value);
+    const passengers = parseInt(passengersInput.value);
+
+    // Check if fields are empty
+    if (distanceInput.value === '' || isNaN(distance) || distance < 1) {
+        estimateAmount.textContent = '—';
+        resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
         return;
     }
-    
-    // Simple email validation
-    if (!email.includes('@') || !email.includes('.')) {
-        alert('Please enter a valid email address.');
+
+    if (passengersInput.value === '' || isNaN(passengers) || passengers < 1) {
+        estimateAmount.textContent = '—';
+        resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
         return;
     }
-    
-    // Redirect to WhatsApp with pre-filled message
-    const whatsappMessage = `Hello Shahawi Ltd,%0A%0AName: ${name}%0AEmail: ${email}%0AMessage: ${message}`;
-    window.location.href = `https://wa.me/${CONFIG.whatsappNumber}?text=${whatsappMessage}`;
+
+    // Validate limits
+    if (vehicleType === 'car' && passengers > 4) {
+        alert('Private car can only carry up to 4 passengers. Please select Bus for larger groups.');
+        return;
+    }
+
+    if (passengers > 16) {
+        alert('Maximum capacity is 16 passengers. Please contact us for larger groups.');
+        return;
+    }
+
+    // Calculate
+    const rate = PRICING[vehicleType][tripType] || PRICING[vehicleType].custom;
+    let baseCost = distance * rate;
+    const minCharge = PRICING.minCharge[vehicleType];
+    if (baseCost < minCharge) {
+        baseCost = minCharge;
+    }
+
+    let extraPassengerCost = 0;
+    if (passengers > 2) {
+        const extraCount = passengers - 2;
+        extraPassengerCost = extraCount * PRICING.extraPassenger[vehicleType];
+    }
+
+    let waitingCost = 0;
+    if (tripType === 'hospital' || tripType === 'airport') {
+        waitingCost = WAITING_CHARGE;
+    }
+
+    let total = baseCost + extraPassengerCost + waitingCost;
+    total = Math.round(total * 100) / 100;
+
+    // Display result
+    estimateAmount.textContent = `£${total.toFixed(2)}`;
+    resultBox.style.borderColor = '#25D366';
+
+    console.log('Quote Breakdown:', {
+        tripType: tripType,
+        vehicle: vehicleType,
+        distance: distance,
+        passengers: passengers,
+        baseRate: rate,
+        baseCost: baseCost,
+        extraPassengerCost: extraPassengerCost,
+        waitingCost: waitingCost,
+        total: total
+    });
+}
+
+// Auto-calculate only when all fields have values
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('.calculator-input');
+    const estimateAmount = document.getElementById('estimateAmount');
+    const resultBox = document.getElementById('quoteResult');
+
+    inputs.forEach(input => {
+        input.addEventListener('change', function() {
+            // Check if all required fields have values
+            const distance = document.getElementById('distance').value;
+            const passengers = document.getElementById('passengers').value;
+            
+            if (distance && passengers) {
+                calculateQuote();
+            } else {
+                estimateAmount.textContent = '—';
+                resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
+            }
+        });
+        
+        input.addEventListener('input', function() {
+            // Only auto-calculate if both fields have values
+            const distance = document.getElementById('distance').value;
+            const passengers = document.getElementById('passengers').value;
+            
+            if (this.type === 'number' && distance && passengers) {
+                calculateQuote();
+            } else {
+                // If either field is empty, show placeholder
+                if (!distance || !passengers) {
+                    estimateAmount.textContent = '—';
+                    resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
+                }
+            }
+        });
+    });
+
+    // Initial state - show placeholder
+    estimateAmount.textContent = '—';
+    resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
 });
-*/
+
+// Vehicle type passenger limits
+document.getElementById('vehicleType')?.addEventListener('change', function() {
+    const passengersInput = document.getElementById('passengers');
+    const passengers = parseInt(passengersInput.value);
+    if (this.value === 'car' && passengers > 4) {
+        passengersInput.value = 4;
+    }
+    // Recalculate if fields have values
+    if (document.getElementById('distance').value && passengersInput.value) {
+        calculateQuote();
+    }
+});
+
+document.getElementById('passengers')?.addEventListener('change', function() {
+    const vehicleType = document.getElementById('vehicleType').value;
+    if (vehicleType === 'car' && parseInt(this.value) > 4) {
+        alert('Private car can only carry up to 4 passengers. Switching to Bus.');
+        document.getElementById('vehicleType').value = 'bus';
+    }
+    if (parseInt(this.value) > 16) {
+        this.value = 16;
+        alert('Maximum capacity is 16 passengers.');
+    }
+    // Recalculate if fields have values
+    if (document.getElementById('distance').value && this.value) {
+        calculateQuote();
+    }
+});
 
 // ========================================
-// 9. LAZY LOAD IMAGES (if you add images)
-// ========================================
-// Automatically lazy load images
-document.querySelectorAll('img[data-src]').forEach(img => {
-    img.src = img.dataset.src;
-    img.removeAttribute('data-src');
-});
-
-// ========================================
-// 10. YEAR UPDATE FOR FOOTER
+// 9. YEAR UPDATE FOR FOOTER
 // ========================================
 document.querySelectorAll('.footer-bottom p:first-child').forEach(el => {
     const year = new Date().getFullYear();
@@ -299,20 +382,7 @@ document.querySelectorAll('.footer-bottom p:first-child').forEach(el => {
 });
 
 // ========================================
-// 11. KEYBOARD ACCESSIBILITY
-// ========================================
-// Allow Enter/Space key to trigger buttons and links
-document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.click();
-        }
-    });
-});
-
-// ========================================
-// 12. CONSOLE WELCOME MESSAGE
+// 10. CONSOLE WELCOME MESSAGE
 // ========================================
 console.log('%c🚐 Shahawi Ltd', 'font-size: 24px; font-weight: bold; color: #1a1a2e;');
 console.log(`%c${CONFIG.tagline}`, 'font-size: 14px; color: #25D366;');
@@ -321,43 +391,4 @@ console.log('✉️ Email: ' + CONFIG.email);
 console.log('💬 WhatsApp: https://wa.me/' + CONFIG.whatsappNumber);
 console.log('—'.repeat(40));
 console.log('✅ Website loaded successfully!');
-
-// ========================================
-// 13. PERFORMANCE: DEBOUNCE RESIZE EVENTS
-// ========================================
-let resizeTimer;
-window.addEventListener('resize', function() {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function() {
-        // Handle any resize-specific logic here
-        // For example, recalculate element positions
-    }, 250);
-});
-
-// ========================================
-// 14. DARK MODE DETECTION (Optional)
-// ========================================
-// Check if user prefers dark mode
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    // You could add dark mode support here if needed
-    console.log('User prefers dark mode');
-}
-
-// ========================================
-// 15. PREVENT DUPLICATE SUBMISSIONS
-// ========================================
-// Prevent double-clicking on buttons
-document.querySelectorAll('.btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        if (this.dataset.clicked === 'true') {
-            e.preventDefault();
-            return;
-        }
-        this.dataset.clicked = 'true';
-        setTimeout(() => {
-            this.dataset.clicked = 'false';
-        }, 3000);
-    });
-});
-
-console.log('✅ All scripts initialized successfully!');
+console.log('✅ Quote calculator ready!');

@@ -80,7 +80,6 @@ a {
     overflow: hidden;
 }
 
-/* Button Ripple Effect */
 .btn::after {
     content: '';
     position: absolute;
@@ -121,6 +120,11 @@ a {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(44, 62, 107, 0.4);
     background: #1a2a4a;
+}
+
+.btn-secondary.small {
+    padding: 10px 20px;
+    font-size: 0.85rem;
 }
 
 .btn-whatsapp {
@@ -167,12 +171,13 @@ a {
 .nav-brand {
     display: flex;
     align-items: center;
+    gap: 14px;
 }
 
-.logo-container {
+.logo-link {
     display: flex;
     align-items: center;
-    gap: 12px;
+    flex-shrink: 0;
 }
 
 .logo {
@@ -187,6 +192,27 @@ a {
 
 .logo-alt {
     display: none;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.brand-name {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    letter-spacing: -0.5px;
+}
+
+.brand-tagline {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #6b7280;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .nav-links {
@@ -432,30 +458,79 @@ a {
     margin-bottom: 20px;
 }
 
+/* ===== QUOTE CALCULATOR ===== */
 .card-input-group {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
-.card-input-group input {
+.calculator-input {
+    width: 100%;
     padding: 12px 16px;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
     font-size: 0.9rem;
     background: #f9fafb;
-    color: #6b7280;
-    width: 100%;
-    transition: border-color 0.3s;
+    color: #1a1a2e;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    font-family: inherit;
+    appearance: auto;
 }
 
-.card-input-group input:hover {
+.calculator-input:focus {
+    outline: none;
+    border-color: #25D366;
+    box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+}
+
+.calculator-input:hover {
     border-color: #25D366;
 }
 
-.card-input-group input::placeholder {
+.calculator-input::placeholder {
     color: #9ca3af;
+}
+
+select.calculator-input {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+}
+
+select.calculator-input option {
+    padding: 8px;
+}
+
+/* Quote Result */
+.quote-result {
+    background: linear-gradient(135deg, #f0f7ff, #e8f0fe);
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    margin: 12px 0 16px;
+    border: 2px solid rgba(37, 211, 102, 0.15);
+    transition: border-color 0.3s;
+}
+
+.estimate-label {
+    display: block;
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.estimate-amount {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-top: 2px;
 }
 
 /* ===== TRUST BAR ===== */
@@ -1013,15 +1088,6 @@ a {
     }
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
 /* ========================================
    RESPONSIVE DESIGN
    ======================================== */
@@ -1051,7 +1117,6 @@ a {
 
 /* Mobile Landscape */
 @media (max-width: 768px) {
-    /* Mobile Menu */
     .mobile-menu-btn {
         display: block;
     }
@@ -1090,7 +1155,6 @@ a {
         padding: 12px;
     }
 
-    /* Hero */
     .hero {
         padding: 40px 0 60px;
     }
@@ -1117,7 +1181,6 @@ a {
         max-width: 100%;
     }
 
-    /* Services */
     .services-grid {
         grid-template-columns: 1fr 1fr;
     }
@@ -1130,7 +1193,6 @@ a {
         grid-template-columns: 1fr;
     }
 
-    /* Contact */
     .contact-box {
         grid-template-columns: 1fr;
         padding: 32px 24px;
@@ -1159,7 +1221,6 @@ a {
         justify-content: center;
     }
 
-    /* Footer */
     .footer-grid {
         flex-direction: column;
         text-align: center;
@@ -1187,7 +1248,6 @@ a {
         padding: 0 16px;
     }
 
-    /* Logo */
     .logo-primary {
         display: none;
     }
@@ -1199,6 +1259,19 @@ a {
 
     .logo {
         height: 40px;
+    }
+
+    .brand-name {
+        font-size: 1.1rem;
+    }
+
+    .brand-tagline {
+        font-size: 0.55rem;
+        letter-spacing: 1.5px;
+    }
+
+    .nav-brand {
+        gap: 10px;
     }
 
     .hero h1 {
@@ -1251,18 +1324,13 @@ a {
         font-size: 1rem;
     }
 
-    .growing-timeline {
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
+    .estimate-amount {
+        font-size: 1.6rem;
     }
 
-    .timeline-item {
+    .calculator-input {
+        padding: 10px 14px;
         font-size: 0.85rem;
-    }
-
-    .contact-card {
-        padding: 30px 24px;
     }
 
     .footer {
@@ -1284,19 +1352,22 @@ a {
     .footer-bottom {
         font-size: 0.75rem;
     }
-
-    /* Back to Top Button */
-    .back-to-top {
-        width: 44px !important;
-        height: 44px !important;
-        bottom: 20px !important;
-        right: 20px !important;
-        font-size: 20px !important;
-    }
 }
 
-/* Small phones */
 @media (max-width: 360px) {
+    .brand-name {
+        font-size: 0.95rem;
+    }
+
+    .brand-tagline {
+        font-size: 0.5rem;
+        letter-spacing: 1px;
+    }
+
+    .nav-brand {
+        gap: 8px;
+    }
+
     .hero h1 {
         font-size: 1.5rem;
     }
@@ -1330,64 +1401,17 @@ a {
 }
 
 /* ========================================
-   PRINT STYLES
-   ======================================== */
-
-@media print {
-    .navbar,
-    .hero-visual,
-    .contact-visual,
-    .back-to-top,
-    .btn {
-        display: none !important;
-    }
-
-    .hero {
-        padding: 20px 0;
-        background: #fff !important;
-    }
-
-    .hero h1 {
-        font-size: 2rem !important;
-    }
-
-    .growing {
-        background: #1a1a2e !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }
-
-    .contact-box {
-        box-shadow: none !important;
-        border: 1px solid #ddd !important;
-    }
-
-    .footer {
-        background: #0f0f1a !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }
-
-    .footer-logo {
-        filter: brightness(0) invert(1) !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }
-}
-
-/* ========================================
    ACCESSIBILITY
    ======================================== */
 
-/* Focus styles for keyboard navigation */
 a:focus-visible,
 button:focus-visible,
-input:focus-visible {
+input:focus-visible,
+select:focus-visible {
     outline: 3px solid #25D366;
     outline-offset: 2px;
 }
 
-/* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -1410,7 +1434,6 @@ input:focus-visible {
     }
 }
 
-/* High contrast mode */
 @media (prefers-contrast: high) {
     .btn-primary {
         background: #006600;
@@ -1437,55 +1460,28 @@ input:focus-visible {
     }
 }
 
-.nav-brand {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+/* ===== BACK TO TOP BUTTON (added by JS) ===== */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: #25D366;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    z-index: 999;
 }
 
-.brand-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-}
-
-.brand-name {
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: #1a1a2e;
-    letter-spacing: -0.5px;
-}
-
-.brand-tagline {
-    font-size: 0.65rem;
-    font-weight: 600;
-    color: #6b7280;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-@media (max-width: 480px) {
-    .brand-name {
-        font-size: 1.1rem;
-    }
-    .brand-tagline {
-        font-size: 0.55rem;
-        letter-spacing: 1.5px;
-    }
-    .nav-brand {
-        gap: 10px;
-    }
-}
-
-@media (max-width: 360px) {
-    .brand-name {
-        font-size: 0.95rem;
-    }
-    .brand-tagline {
-        font-size: 0.5rem;
-        letter-spacing: 1px;
-    }
-    .nav-brand {
-        gap: 8px;
-    }
+.back-to-top:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
 }
