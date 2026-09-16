@@ -1,6 +1,6 @@
 // ========================================
 // SHAHAWI LTD - Complete Website Script
-// Version: 2.0
+// Version: 5.0 (with separate luggage + full validation)
 // ========================================
 
 // ===== CONFIGURATION =====
@@ -194,7 +194,7 @@ backToTopBtn.addEventListener('mouseleave', function() {
 });
 
 // ========================================
-// 8. QUOTE CALCULATOR
+// 8. QUOTE CALCULATOR (with separate luggage)
 // ========================================
 
 // Pricing configuration (per mile)
@@ -225,30 +225,69 @@ const PRICING = {
     }
 };
 
+// Luggage pricing (per bag)
+const LUGGAGE_FEES = {
+    small: 2.00,   // per small bag
+    large: 5.00    // per large bag
+};
+
 const WAITING_CHARGE = 5.00;
 
 function calculateQuote() {
     const tripType = document.getElementById('tripType').value;
     const distanceInput = document.getElementById('distance');
     const passengersInput = document.getElementById('passengers');
+    const smallBagsInput = document.getElementById('smallBags');
+    const largeBagsInput = document.getElementById('largeBags');
     const vehicleType = document.getElementById('vehicleType').value;
     const estimateAmount = document.getElementById('estimateAmount');
     const resultBox = document.getElementById('quoteResult');
+    const luggageInfo = document.getElementById('luggageFeeInfo');
+    const breakdown = document.getElementById('quoteBreakdown');
 
-    // Get values - allow empty
+    // Get values
     const distance = parseFloat(distanceInput.value);
     const passengers = parseInt(passengersInput.value);
+    const smallBags = parseInt(smallBagsInput.value) || 0;
+    const largeBags = parseInt(largeBagsInput.value) || 0;
 
-    // Check if fields are empty
-    if (distanceInput.value === '' || isNaN(distance) || distance < 1) {
+    // ✅ CHECK ALL REQUIRED FIELDS ARE FILLED
+    // Required: tripType, distance, passengers, vehicleType
+    // Optional: smallBags, largeBags (can be 0)
+
+    // Check trip type
+    if (!tripType || tripType === '') {
         estimateAmount.textContent = '—';
         resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
+        if (luggageInfo) luggageInfo.classList.remove('visible');
+        if (breakdown) breakdown.classList.remove('visible');
         return;
     }
 
+    // Check distance
+    if (distanceInput.value === '' || isNaN(distance) || distance < 1) {
+        estimateAmount.textContent = '—';
+        resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
+        if (luggageInfo) luggageInfo.classList.remove('visible');
+        if (breakdown) breakdown.classList.remove('visible');
+        return;
+    }
+
+    // Check passengers
     if (passengersInput.value === '' || isNaN(passengers) || passengers < 1) {
         estimateAmount.textContent = '—';
         resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
+        if (luggageInfo) luggageInfo.classList.remove('visible');
+        if (breakdown) breakdown.classList.remove('visible');
+        return;
+    }
+
+    // Check vehicle type
+    if (!vehicleType || vehicleType === '') {
+        estimateAmount.textContent = '—';
+        resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
+        if (luggageInfo) luggageInfo.classList.remove('visible');
+        if (breakdown) breakdown.classList.remove('visible');
         return;
     }
 
@@ -263,7 +302,12 @@ function calculateQuote() {
         return;
     }
 
-    // Calculate
+    if (smallBags > 20 || largeBags > 20) {
+        alert('Maximum 20 bags per size. Please contact us for larger luggage requirements.');
+        return;
+    }
+
+    // Calculate base cost
     const rate = PRICING[vehicleType][tripType] || PRICING[vehicleType].custom;
     let baseCost = distance * rate;
     const minCharge = PRICING.minCharge[vehicleType];
@@ -271,75 +315,150 @@ function calculateQuote() {
         baseCost = minCharge;
     }
 
+    // Extra passenger charges (beyond 2 passengers)
     let extraPassengerCost = 0;
     if (passengers > 2) {
         const extraCount = passengers - 2;
         extraPassengerCost = extraCount * PRICING.extraPassenger[vehicleType];
     }
 
+    // Luggage cost - separate for small and large
+    const smallBagsCost = smallBags * LUGGAGE_FEES.small;
+    const largeBagsCost = largeBags * LUGGAGE_FEES.large;
+    const luggageCost = smallBagsCost + largeBagsCost;
+
+    // Waiting time (hospital/airport)
     let waitingCost = 0;
     if (tripType === 'hospital' || tripType === 'airport') {
         waitingCost = WAITING_CHARGE;
     }
 
-    let total = baseCost + extraPassengerCost + waitingCost;
+    // Calculate total
+    let total = baseCost + extraPassengerCost + luggageCost + waitingCost;
     total = Math.round(total * 100) / 100;
 
     // Display result
     estimateAmount.textContent = `£${total.toFixed(2)}`;
     resultBox.style.borderColor = '#25D366';
 
+    // Show luggage fee info
+    if (luggageInfo) {
+        if (luggageCost > 0) {
+            let parts = [];
+            if (smallBags > 0) parts.push(`${smallBags} small (£${smallBagsCost.toFixed(2)})`);
+            if (largeBags > 0) parts.push(`${largeBags} large (£${largeBagsCost.toFixed(2)})`);
+            luggageInfo.textContent = `Luggage: ${parts.join(' + ')} = £${luggageCost.toFixed(2)}`;
+            luggageInfo.classList.add('visible');
+        } else {
+            luggageInfo.classList.remove('visible');
+        }
+    }
+
+    // Show breakdown
+    if (breakdown) {
+        let luggageRows = '';
+        if (smallBags > 0) {
+            luggageRows += `
+            <div class="breakdown-row">
+                <span class="label">Small bags (${smallBags} × £${LUGGAGE_FEES.small.toFixed(2)})</span>
+                <span class="value">£${smallBagsCost.toFixed(2)}</span>
+            </div>`;
+        }
+        if (largeBags > 0) {
+            luggageRows += `
+            <div class="breakdown-row">
+                <span class="label">Large bags (${largeBags} × £${LUGGAGE_FEES.large.toFixed(2)})</span>
+                <span class="value">£${largeBagsCost.toFixed(2)}</span>
+            </div>`;
+        }
+
+        breakdown.innerHTML = `
+            <div class="breakdown-row">
+                <span class="label">Base fare (${distance} miles)</span>
+                <span class="value">£${baseCost.toFixed(2)}</span>
+            </div>
+            ${extraPassengerCost > 0 ? `
+            <div class="breakdown-row">
+                <span class="label">Extra passengers (${passengers - 2})</span>
+                <span class="value">£${extraPassengerCost.toFixed(2)}</span>
+            </div>` : ''}
+            ${luggageRows}
+            ${waitingCost > 0 ? `
+            <div class="breakdown-row">
+                <span class="label">Waiting time (15 mins)</span>
+                <span class="value">£${waitingCost.toFixed(2)}</span>
+            </div>` : ''}
+            <div class="breakdown-row total">
+                <span class="label">Total</span>
+                <span class="value">£${total.toFixed(2)}</span>
+            </div>
+        `;
+        breakdown.classList.add('visible');
+    }
+
     console.log('Quote Breakdown:', {
         tripType: tripType,
         vehicle: vehicleType,
         distance: distance,
         passengers: passengers,
+        smallBags: smallBags,
+        largeBags: largeBags,
         baseRate: rate,
         baseCost: baseCost,
         extraPassengerCost: extraPassengerCost,
+        smallBagsCost: smallBagsCost,
+        largeBagsCost: largeBagsCost,
+        luggageCost: luggageCost,
         waitingCost: waitingCost,
         total: total
     });
 }
 
-// Auto-calculate only when all fields have values
+// Auto-calculate only when all required fields have values
 document.addEventListener('DOMContentLoaded', function() {
     const inputs = document.querySelectorAll('.calculator-input');
     const estimateAmount = document.getElementById('estimateAmount');
     const resultBox = document.getElementById('quoteResult');
+    const luggageInfo = document.getElementById('luggageFeeInfo');
+    const breakdown = document.getElementById('quoteBreakdown');
 
     inputs.forEach(input => {
         input.addEventListener('change', function() {
-            // Check if all required fields have values
+            const tripType = document.getElementById('tripType').value;
             const distance = document.getElementById('distance').value;
             const passengers = document.getElementById('passengers').value;
+            const vehicleType = document.getElementById('vehicleType').value;
             
-            if (distance && passengers) {
+            // Only calculate if ALL required fields have values
+            if (tripType && distance && passengers && vehicleType) {
                 calculateQuote();
             } else {
                 estimateAmount.textContent = '—';
                 resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
+                if (luggageInfo) luggageInfo.classList.remove('visible');
+                if (breakdown) breakdown.classList.remove('visible');
             }
         });
         
         input.addEventListener('input', function() {
-            // Only auto-calculate if both fields have values
+            const tripType = document.getElementById('tripType').value;
             const distance = document.getElementById('distance').value;
             const passengers = document.getElementById('passengers').value;
+            const vehicleType = document.getElementById('vehicleType').value;
             
-            if (this.type === 'number' && distance && passengers) {
+            // Only calculate if ALL required fields have values
+            if (tripType && distance && passengers && vehicleType) {
                 calculateQuote();
             } else {
-                // If either field is empty, show placeholder
-                if (!distance || !passengers) {
-                    estimateAmount.textContent = '—';
-                    resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
-                }
+                estimateAmount.textContent = '—';
+                resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
+                if (luggageInfo) luggageInfo.classList.remove('visible');
+                if (breakdown) breakdown.classList.remove('visible');
             }
         });
     });
 
-    // Initial state - show placeholder
+    // Initial state
     estimateAmount.textContent = '—';
     resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
 });
@@ -351,8 +470,10 @@ document.getElementById('vehicleType')?.addEventListener('change', function() {
     if (this.value === 'car' && passengers > 4) {
         passengersInput.value = 4;
     }
-    // Recalculate if fields have values
-    if (document.getElementById('distance').value && passengersInput.value) {
+    // Recalculate if all fields have values
+    const tripType = document.getElementById('tripType').value;
+    const distance = document.getElementById('distance').value;
+    if (tripType && distance && passengersInput.value && this.value) {
         calculateQuote();
     }
 });
@@ -367,8 +488,11 @@ document.getElementById('passengers')?.addEventListener('change', function() {
         this.value = 16;
         alert('Maximum capacity is 16 passengers.');
     }
-    // Recalculate if fields have values
-    if (document.getElementById('distance').value && this.value) {
+    // Recalculate if all fields have values
+    const tripType = document.getElementById('tripType').value;
+    const distance = document.getElementById('distance').value;
+    const vehicleTypeVal = document.getElementById('vehicleType').value;
+    if (tripType && distance && this.value && vehicleTypeVal) {
         calculateQuote();
     }
 });
@@ -391,4 +515,4 @@ console.log('✉️ Email: ' + CONFIG.email);
 console.log('💬 WhatsApp: https://wa.me/' + CONFIG.whatsappNumber);
 console.log('—'.repeat(40));
 console.log('✅ Website loaded successfully!');
-console.log('✅ Quote calculator ready!');
+console.log('✅ Quote calculator with separate luggage ready!');

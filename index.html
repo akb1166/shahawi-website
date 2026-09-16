@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shahawi Ltd - Personal Transport</title>
-    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="style.css?v=5">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -74,6 +74,7 @@
                         <p>Estimate your trip cost instantly</p>
                         <div class="card-input-group">
                             <select id="tripType" class="calculator-input">
+                                <option value="">Select trip type...</option>
                                 <option value="airport">Airport Transfer</option>
                                 <option value="school">School Run</option>
                                 <option value="group">Group Journey</option>
@@ -84,13 +85,26 @@
                             <input type="number" id="distance" class="calculator-input" placeholder="Distance (miles)" min="1">
                             <input type="number" id="passengers" class="calculator-input" placeholder="Number of passengers" min="1" max="16">
                             <select id="vehicleType" class="calculator-input">
+                                <option value="">Select vehicle...</option>
                                 <option value="car">Private Car (up to 4)</option>
                                 <option value="bus">Bus (up to 16)</option>
                             </select>
+                            <div class="luggage-row">
+                                <div class="luggage-field">
+                                    <label for="smallBags" class="luggage-label">🧳 Small bags (£2 each)</label>
+                                    <input type="number" id="smallBags" class="calculator-input" placeholder="0" min="0" max="20" value="0">
+                                </div>
+                                <div class="luggage-field">
+                                    <label for="largeBags" class="luggage-label">🧳 Large bags (£5 each)</label>
+                                    <input type="number" id="largeBags" class="calculator-input" placeholder="0" min="0" max="20" value="0">
+                                </div>
+                            </div>
                         </div>
                         <div class="quote-result" id="quoteResult">
                             <span class="estimate-label">Estimated Cost</span>
                             <span class="estimate-amount" id="estimateAmount">—</span>
+                            <div class="luggage-fee-info" id="luggageFeeInfo"></div>
+                            <div class="quote-breakdown" id="quoteBreakdown"></div>
                         </div>
                         <button onclick="calculateQuote()" class="btn btn-whatsapp small">Calculate Quote</button>
                         <a href="https://wa.me/447397547205" class="btn btn-secondary small" style="margin-top: 8px; width: 100%; text-align: center; padding: 10px;">Book on WhatsApp</a>
@@ -364,6 +378,6 @@
         </div>
     </footer>
 
-    <script src="script.js?v=2"></script>
+    <script src="script.js?v=5"></script>
 </body>
 </html>
