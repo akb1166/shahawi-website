@@ -1,6 +1,6 @@
 // ========================================
 // SHAHAWI LTD - Complete Website Script
-// Version: 5.0 (with separate luggage + full validation)
+// Version: 6.0
 // ========================================
 
 // ===== CONFIGURATION =====
@@ -101,41 +101,9 @@ animateElements.forEach(el => {
 });
 
 // ========================================
-// 5. COUNTER ANIMATION FOR STATS
+// 5. COUNTER ANIMATION FOR STATS (Adapted for text)
 // ========================================
-const statNumbers = document.querySelectorAll('.stat-number');
-
-const counterObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const el = entry.target;
-            const target = parseInt(el.textContent);
-            if (!isNaN(target) && target > 0) {
-                animateCounter(el, target);
-            }
-            counterObserver.unobserve(el);
-        }
-    });
-}, { threshold: 0.5 });
-
-statNumbers.forEach(el => {
-    counterObserver.observe(el);
-});
-
-function animateCounter(element, target) {
-    let current = 0;
-    const increment = target / 40;
-    const stepTime = 1500 / 40;
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            element.textContent = target;
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(current);
-        }
-    }, stepTime);
-}
+// Note: Since stats are now text (Direct, Flexible, Safe), we skip the number counting logic.
 
 // ========================================
 // 6. NAVBAR SCROLL EFFECT
@@ -251,11 +219,7 @@ function calculateQuote() {
     const smallBags = parseInt(smallBagsInput.value) || 0;
     const largeBags = parseInt(largeBagsInput.value) || 0;
 
-    // ✅ CHECK ALL REQUIRED FIELDS ARE FILLED
-    // Required: tripType, distance, passengers, vehicleType
-    // Optional: smallBags, largeBags (can be 0)
-
-    // Check trip type
+    // CHECK ALL REQUIRED FIELDS ARE FILLED
     if (!tripType || tripType === '') {
         estimateAmount.textContent = '—';
         resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
@@ -264,7 +228,6 @@ function calculateQuote() {
         return;
     }
 
-    // Check distance
     if (distanceInput.value === '' || isNaN(distance) || distance < 1) {
         estimateAmount.textContent = '—';
         resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
@@ -273,7 +236,6 @@ function calculateQuote() {
         return;
     }
 
-    // Check passengers
     if (passengersInput.value === '' || isNaN(passengers) || passengers < 1) {
         estimateAmount.textContent = '—';
         resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
@@ -282,7 +244,6 @@ function calculateQuote() {
         return;
     }
 
-    // Check vehicle type
     if (!vehicleType || vehicleType === '') {
         estimateAmount.textContent = '—';
         resultBox.style.borderColor = 'rgba(37, 211, 102, 0.15)';
@@ -429,7 +390,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const passengers = document.getElementById('passengers').value;
             const vehicleType = document.getElementById('vehicleType').value;
             
-            // Only calculate if ALL required fields have values
             if (tripType && distance && passengers && vehicleType) {
                 calculateQuote();
             } else {
@@ -446,7 +406,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const passengers = document.getElementById('passengers').value;
             const vehicleType = document.getElementById('vehicleType').value;
             
-            // Only calculate if ALL required fields have values
             if (tripType && distance && passengers && vehicleType) {
                 calculateQuote();
             } else {
@@ -470,7 +429,6 @@ document.getElementById('vehicleType')?.addEventListener('change', function() {
     if (this.value === 'car' && passengers > 4) {
         passengersInput.value = 4;
     }
-    // Recalculate if all fields have values
     const tripType = document.getElementById('tripType').value;
     const distance = document.getElementById('distance').value;
     if (tripType && distance && passengersInput.value && this.value) {
@@ -488,7 +446,6 @@ document.getElementById('passengers')?.addEventListener('change', function() {
         this.value = 16;
         alert('Maximum capacity is 16 passengers.');
     }
-    // Recalculate if all fields have values
     const tripType = document.getElementById('tripType').value;
     const distance = document.getElementById('distance').value;
     const vehicleTypeVal = document.getElementById('vehicleType').value;
@@ -515,4 +472,4 @@ console.log('✉️ Email: ' + CONFIG.email);
 console.log('💬 WhatsApp: https://wa.me/' + CONFIG.whatsappNumber);
 console.log('—'.repeat(40));
 console.log('✅ Website loaded successfully!');
-console.log('✅ Quote calculator with separate luggage ready!');
+console.log('✅ Quote calculator ready!');
